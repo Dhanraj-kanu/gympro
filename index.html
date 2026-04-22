@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="description" content="GymPro - Smart Gym Membership & Attendance Management System">
+  <meta name="theme-color" content="#080818">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>GymPro - Smart Gym Management</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='38' fill='%236366f1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='105' font-family='Arial' font-weight='bold' fill='white'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='38' fill='%236366f1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='105' font-family='Arial' font-weight='bold' fill='white'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- QR Code Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div id="toast-container" class="toast-container"></div>
+
+<!-- ============== LOGIN VIEW ============== -->
+<div id="view-login" class="login-wrapper">
+  <div class="login-card">
+    <div class="login-logo">G</div>
+    <h1 class="login-title">GymPro</h1>
+    <p class="login-subtitle">Smart Gym Management System</p>
+
+    <form id="login-form" onsubmit="return false">
+      <div class="form-group">
+        <label for="login-username">Username / Phone</label>
+        <input type="text" id="login-username" class="form-input" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="btn-login" onclick="App.login()">
+        Sign In
+      </button>
+    </form>
+
+    <div class="demo-accounts">
+      <h4>Quick Demo Access</h4>
+      <button class="demo-btn" onclick="App.demoLogin('owner')">
+        <span class="demo-role owner">Owner</span>
+        <span>owner / admin123</span>
+      </button>
+      <button class="demo-btn" onclick="App.demoLogin('trainer')">
+        <span class="demo-role trainer">Trainer</span>
+        <span>trainer / trainer123</span>
+      </button>
+      <button class="demo-btn" onclick="App.demoLogin('member','m1')">
+        <span class="demo-role member">Member</span>
+        <span>Rajesh Kumar (Expired)</span>
+      </button>
+      <button class="demo-btn" onclick="App.demoLogin('member','m4')">
+        <span class="demo-role member">Member</span>
+        <span>Anita Reddy (Active)</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== DASHBOARD VIEW ============== -->
+<div id="view-dashboard" class="app-layout hidden">
+
+  <!-- Sidebar Overlay (Mobile) -->
+  <div id="sidebar-overlay" class="sidebar-overlay" onclick="App.toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">G</div>
+      <div class="sidebar-brand">
+        <h2>GymPro</h2>
+        <span>Management</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <!-- Nav items injected by JS based on role -->
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar" id="sidebar-avatar"></div>
+        <div class="user-info">
+          <div class="name" id="sidebar-name">User</div>
+          <div class="role" id="sidebar-role">Role</div>
+        </div>
+        <button class="btn-logout" onclick="App.logout()" title="Logout">⏻</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="content-header">
+      <div class="flex items-center gap-md">
+        <button class="mobile-toggle" onclick="App.toggleSidebar()">☰</button>
+        <h1 id="page-title">Dashboard</h1>
+      </div>
+      <div class="header-actions">
+        <button class="notif-bell" onclick="App.navigate('notifications')" id="notif-bell-btn">
+          🔔
+          <span class="notif-count hidden" id="notif-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-body" id="content-area">
+      <!-- Dynamic content injected here -->
+    </div>
+  </main>
+</div>
+
+<!-- ============== PAYMENT MODAL ============== -->
+<div id="modal-payment" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>💳 Complete Payment</h3>
+      <button class="modal-close" onclick="App.closePayment()">✕</button>
+    </div>
+    <div class="modal-body" id="payment-modal-body">
+      <!-- Payment form injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ============== ADD MEMBER MODAL ============== -->
+<div id="modal-add-member" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>👤 Add New Member</h3>
+      <button class="modal-close" onclick="App.closeModal('modal-add-member')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="photo-upload" id="photo-upload-area">
+        <span class="upload-icon" id="upload-icon">📷</span>
+        <img id="photo-preview" class="hidden" alt="Preview">
+        <input type="file" accept="image/*" id="member-photo-input" onchange="App.previewPhoto(event)">
+      </div>
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="new-member-name" class="form-input" placeholder="Enter member's full name">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="new-member-phone" class="form-input" placeholder="Enter phone number">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="new-member-email" class="form-input" placeholder="Enter email address">
+      </div>
+      <div class="form-group">
+        <label>Login Password <span style="font-size:11px;color:var(--text-muted)">(Share this with the member)</span></label>
+        <div style="position:relative">
+          <input type="text" id="new-member-password" class="form-input" placeholder="Set initial password" style="padding-right:80px">
+          <button type="button" onclick="App.generatePassword()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--accent);color:#fff;border:none;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Generate</button>
+        </div>
+        <p style="font-size:11px;color:var(--warning);margin-top:6px" id="password-note">⚠️ Note this password down — give it to the member so they can login</p>
+      </div>
+      <div class="form-group">
+        <label>Subscription Plan</label>
+        <select id="new-member-plan" class="form-select">
+          <option value="monthly">Monthly - ₹999</option>
+          <option value="quarterly">Quarterly - ₹2,499</option>
+          <option value="halfyearly">Half Yearly - ₹4,499</option>
+          <option value="annual">Annual - ₹7,999</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="App.addMember()" style="margin-top:8px">
+        ✓ Add Member
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== VIEW MEMBER PROFILE MODAL ============== -->
+<div id="modal-member-profile" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>👤 Member Profile</h3>
+      <button class="modal-close" onclick="App.closeModal('modal-member-profile')">✕</button>
+    </div>
+    <div class="modal-body" id="member-profile-body">
+      <!-- Profile injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ============== CHANGE PASSWORD MODAL ============== -->
+<div id="modal-change-password" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🔒 Change Password</h3>
+      <button class="modal-close" onclick="App.closeModal('modal-change-password')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" id="change-current-pw" class="form-input" placeholder="Enter your current password">
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="change-new-pw" class="form-input" placeholder="Enter new password (min 6 characters)">
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password</label>
+        <input type="password" id="change-confirm-pw" class="form-input" placeholder="Re-enter new password">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="App.changePassword()" style="margin-top:8px">
+        🔒 Update Password
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+  }
+</script>
+</body>
+</html>
