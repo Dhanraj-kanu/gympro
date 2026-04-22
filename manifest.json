@@ -11,29 +11,29 @@
   "categories": ["health", "fitness", "business"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='38' fill='%236366f1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='105' font-family='Arial' font-weight='bold' fill='white'%3EG%3C/text%3E%3C/svg%3E",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%236366f1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='280' font-family='Arial' font-weight='bold' fill='white'%3EG%3C/text%3E%3C/svg%3E",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%23080818'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-size='60' font-family='Arial' fill='%236366f1'%3EGymPro Dashboard%3C/text%3E%3C/svg%3E",
+      "src": "./screenshot-wide.png",
       "sizes": "1280x720",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 1280'%3E%3Crect width='720' height='1280' fill='%23080818'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-size='40' font-family='Arial' fill='%236366f1'%3EGymPro Mobile%3C/text%3E%3C/svg%3E",
+      "src": "./screenshot-narrow.png",
       "sizes": "720x1280",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "form_factor": "narrow"
     }
   ],
@@ -43,7 +43,7 @@
       "short_name": "Scan",
       "description": "Scan member QR code",
       "url": "./index.html?action=scan",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='38' fill='%236366f1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='105' font-family='Arial' font-weight='bold' fill='white'%3E%E2%8A%9F%3C/text%3E%3C/svg%3E", "sizes": "192x192"}]
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192", "type": "image/png"}]
     }
   ]
 }
